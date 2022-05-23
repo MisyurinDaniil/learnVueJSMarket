@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Document</title>
+</head>
+<body class="h-100">
+    <div id="app" class="d-flex flex-column h-100">
+        <header class="">
+            <div class="container">
+                <div class="row">
+                    <div class="col header_col d-flex justify-content-end align-items-center position-relative">
+                        <div class="shop-title">
+                            <h1>Vue.js-Shop</h1>
+                        </div>
+                        <div class="search d-flex justify-content-end">
+                            <input class="form-control me-1" v-model="searchLine" type="text" placeholder="Поиск">
+                            <button class="btn-search" @click="filterGoods" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <button type="button" @click="isVisibleCart = !isVisibleCart" id="cart-button" class="btn btn-warning">Корзина</button>
+                        <div v-show="isVisibleCart" class="product-cart flex-column border position-absolute px-2 pb-2">
+                            <p v-if="!cartProducts.length">Ваша корзина пустая.</p>
+                            <div v-for="product in cartProducts" :key="product.id_product" class="cart-item d-flex justify-content-between mt-2 border p-2">
+                                <img class="cart-item__img d-block img-thumbnail" :src="img">
+                                <div class="ms-2">
+                                    <h3 class="cart-item__title">{{product.product_name}}</h3>
+                                    <span class="cart-item__quantity" class="d-block">Количество: {{product.quantity}}</span>
+                                    <br>
+                                    <span class="cart-item__price" class="d-block">{{products.price}} руб. за штуку</span>
+                                </div>
+                                <div class="d-flex flex-column justify-content-center ms-2">
+                                    <p class="cart-item__total-amount">{{product.price * product.quantity}} руб.</p>
+                                    <button @click="delFromCart(product)" class="cart-item__del-button btn btn-secondary">X</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main class="flex-grow-1">
+            <div class="container">
+                <div class="row products-list d-flex justify-content-between">
+                    <div class="product-item col flex-grow-0 mt-3 mb-3" v-for="product in productsFilter" :key="product.id_product">
+                        <div class="product-item__block p-3">
+                            <h3  class="product-item__title">{{ product.product_name }}</h3>
+                            <img class="product-item__img img-fluid img-thumbnail" :src="img">
+                            <p class="product-item__price">{{ product.price }} руб.</p>
+                            <button class="product-item__add-button btn btn-warning" @click="addtoCart(product)">Добавить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="flex-shrink-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col mt-3 mb-3">
+                        {{ message }}
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script defer src="js/vue.js"></script>
+    <script defer src="js/bootstrap.bundle.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
+    <script defer src="js/scripts.js"></script>
+</body>
+</html>

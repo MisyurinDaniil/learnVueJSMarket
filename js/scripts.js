@@ -22,11 +22,9 @@ let vueApp = new Vue({
                     .catch(error => console.log(error))
         },
         filterGoods() {
-            console.log('sadfasdf');
-            // console.log(/java/i.test(str));
-            // const regexp = new RegExp(this.searchLine, 'ig');
-            // let el = this.productsFilter.find(item => regexp.test(item.product_name));
-            // if (el) this.productsFilter == [el];
+            const regexp = new RegExp(this.searchLine, 'ig');
+            let el = this.products.find(item => regexp.test(item.product_name));
+            if (el) this.productsFilter = [el];
         },
         addtoCart(product) {
             this.getJson(this.API + this.addToCartUrl)
@@ -68,7 +66,6 @@ let vueApp = new Vue({
                 this.products = [...data];
                 this.productsFilter = [...data];
             });
-        
         this.getJson(this.API + this.cartProductURL)
             .then(data => {
                 this.cartProducts = [...data.contents];

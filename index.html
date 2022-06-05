@@ -23,15 +23,15 @@
                                 <i class="fas fa-search"></i>
                             </button>
                         </div>
-                        <button type="button" @click="isVisibleCart = !isVisibleCart" id="cart-button" class="btn btn-warning">Корзина</button>
-                            <cart @del-prod-from-cart="delFromCart" :img="imgPlaceholder" :is_visible="isVisibleCart" :cart_products="cartProducts"></cart>
+                        <button type="button" @click="$refs.cart.isVisibleCart = !$refs.cart.isVisibleCart" id="cart-button" class="btn btn-warning">Корзина</button>
+                            <cart ref="cart"></cart>
                     </div>
                 </div>
             </div>
         </header>
         <main class="flex-grow-1">
             <div class="container">
-                <products-list :items="productsFilter" :img="imgPlaceholder" @add-prod-event="addtoCart"></products-list>
+                <products-list ref="products_list"></products-list>
             </div>
         </main>
         <footer class="flex-shrink-0">
@@ -46,7 +46,7 @@
     </div>
     <script defer src="js/vue.js"></script>
     <script defer src="js/bootstrap.bundle.min.js"></script>
-    <!-- <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script> -->
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js" integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP" crossorigin="anonymous"></script>
     <script defer src="js/productsComponets.js"></script>
     <script defer src="js/cartComponents.js"></script>
     <script defer src="js/main.js"></script>

@@ -1,13 +1,28 @@
 Vue.component('products-list', {
-    props: ['items', 'img'],
+    data() {
+        return {
+            products: [],
+            productsFilter: [],
+            productsURL: 'getProducts.json',
+            imgPlaceholder: 'img/image-holder.jpg',
+        }
+    },
     template: `
                 <div class="row products-list d-flex justify-content-between">                    
-                    <product v-for="item in items" :key="item.id_product"
+                    <product v-for="item in productsFilter" :key="item.id_product"
                         :item="item"
-                        :img="img">
+                        :img="imgPlaceholder">
                     </product>
                 </div>
     `,
+    mounted() {
+        console.log(this);
+        this.$root.getJson(API + this.productsURL)
+            .then(data => {
+                this.products = [...data];
+                this.productsFilter = [...data];
+        });
+    },
 });
 
 Vue.component('product', {
@@ -18,7 +33,7 @@ Vue.component('product', {
                         <h3  class="product-item__title">{{ item.product_name }}</h3>
                         <img class="product-item__img img-fluid img-thumbnail" :src="img">
                         <p class="product-item__price">{{ item.price }} руб.</p>
-                        <button @click="$parent.$emit('add-prod-event', item)" class="product-item__add-button btn btn-warning">Добавить</button>
+                        <button @click="$root.$refs.cart.addtoCart(item)" class="product-item__add-button btn btn-warning">Добавить</button>
                     </div>
                 </div>  
     `,

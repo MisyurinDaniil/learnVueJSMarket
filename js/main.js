@@ -10,7 +10,7 @@ let vueApp = new Vue({
         getJson(url) {
             return fetch(url)
                     .then(response => response.json())
-                    .catch(error => console.log(error))
+                    // .catch(error => console.log(error))
         },
         filterGoods() {
             if (this.searchLine) {            

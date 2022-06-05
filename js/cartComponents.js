@@ -8,11 +8,12 @@ Vue.component('cart', {
             imgPlaceholder: 'img/image-holder.jpg',
             isVisibleCart: false,
             isEmptyCart: true,
+            errorText: '',
         }
     },
     methods: {
         addtoCart(product) {
-            this.$root.getJson(API + this.addToCartUrl)
+            this.$root.getJson(API + this.addToCartUrl + '1')
                 .then(data => {
                     if (data.result === 1) {
                         let find = this.cartProducts.find((item) => {
@@ -28,10 +29,14 @@ Vue.component('cart', {
                             });
                         }
                     }
+                })
+                .catch(error => {
+                    this.$root.$refs.products_list.errorText = error + '!!!!';
+                    // this.errorText = error + '!!!!';
                 });
         },
         delFromCart(cartProduct) {
-            this.$root.getJson(API + this.deleteCartUrl)
+            this.$root.getJson(API + this.deleteCartUrl + '1')
                 .then(data => {
                     if (data.result === 1) {
                         let findIndex = null;
@@ -42,11 +47,15 @@ Vue.component('cart', {
                         if (find.quantity === 1) this.cartProducts.splice(findIndex, 1);
                         else --find.quantity;
                     }
+                })
+                .catch(error => {
+                    this.errorText = error + '!!!!';
                 });
         },
     },
     template: `
         <div v-show="isVisibleCart" class="product-cart flex-column border position-absolute px-2 pb-2">
+            <error-component v-if="errorText" :error="errorText"></error-component>  
             <p v-if="!cartProducts.length">Ваша корзина пустая.</p>
             <cart-item v-for="product in cartProducts" :key="product.id_product" :product="product" :img="imgPlaceholder"></cart-item>
         </div>
@@ -56,6 +65,9 @@ Vue.component('cart', {
             .then(data => {
                 this.cartProducts = [...data.contents];
             })
+            .catch(error => {
+                this.errorText = error + '!!!!';
+            });
     },
 });
 Vue.component('cart-item', {

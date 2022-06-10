@@ -13,7 +13,7 @@ Vue.component('cart', {
     },
     methods: {
         addtoCart(product) {
-            this.$root.getJson(API + this.addToCartUrl + '1')
+            this.$root.getJson(API + this.addToCartUrl)
                 .then(data => {
                     if (data.result === 1) {
                         let find = this.cartProducts.find((item) => {
@@ -36,7 +36,7 @@ Vue.component('cart', {
                 });
         },
         delFromCart(cartProduct) {
-            this.$root.getJson(API + this.deleteCartUrl + '1')
+            this.$root.getJson(API + this.deleteCartUrl)
                 .then(data => {
                     if (data.result === 1) {
                         let findIndex = null;
